@@ -10,19 +10,19 @@
     </ul>
     <ul class="flex items-center">
       <template v-if="!authenticated">
-        <li class="text-sm inline-block p-3 text-gray-800">
-          <router-link :to="{ name: 'login' }">Sign in</router-link>
+        <li>
+          <router-link :to="{ name: 'login' }" class="text-sm inline-block p-3 text-gray-800">Sign in</router-link>
         </li>
-        <li class="text-sm inline-block p-3 text-gray-800">
-          <router-link :to="{ name: 'home' }">Account</router-link>
+        <li>
+          <a href="#" class="text-sm inline-block p-3 text-gray-800">Account</a>
         </li>
       </template>
       <template v-if="authenticated">
-        <li class="text-sm inline-block p-3 text-gray-800">
-          <router-link :to="{ name: 'home' }">Account</router-link>
+        <li>
+          <a href="#" class="text-sm inline-block p-3 text-gray-800">Account</a>
         </li>
-        <li class="text-sm inline-block p-3 text-gray-800">
-          <router-link :to="{ name: 'home' }">Log out</router-link>
+        <li>
+          <a href="#" class="text-sm inline-block p-3 text-gray-800" @click.prevent="logout">Log out</a>
         </li>
       </template>
     </ul>
@@ -31,14 +31,24 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   computed: {
     ...mapGetters({
       authenticated: 'auth/authenticated',
-      user: 'auth/user'
+      user: 'auth/user',
     })
+  },
+  methods: {
+    ...mapActions({
+      logoutAction: 'auth/logout'
+    }),
+    async logout() {
+      await this.logoutAction()
+
+      this.$router.replace({ name: 'home' })
+    }
   }
 }
 </script>

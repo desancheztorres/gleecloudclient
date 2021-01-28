@@ -9,19 +9,29 @@
       </li>
     </ul>
     <ul class="flex items-center">
-      <li class="text-sm inline-block p-3 text-gray-800">
-        <router-link :to="{ name: 'login' }">Sign in</router-link>
-      </li>
-      <li class="text-sm inline-block p-3 text-gray-800">
-        <router-link :to="{ name: 'home' }">Account</router-link>
-      </li>
+      <template v-if="!authenticated">
+        <li class="text-sm inline-block p-3 text-gray-800">
+          <router-link :to="{ name: 'login' }">Sign in</router-link>
+        </li>
+        <li class="text-sm inline-block p-3 text-gray-800">
+          <router-link :to="{ name: 'home' }">Account</router-link>
+        </li>
+      </template>
+      <template v-if="authenticated">
+        <li class="text-sm inline-block p-3 text-gray-800">
+          <router-link :to="{ name: 'home' }">Account</router-link>
+        </li>
+        <li class="text-sm inline-block p-3 text-gray-800">
+          <router-link :to="{ name: 'home' }">Log out</router-link>
+        </li>
+      </template>
     </ul>
   </header>
 
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   computed: {
